@@ -6,9 +6,18 @@ import {
   Text,
 } from 'react-native';
 
-function PrimaryButton({ children }: { children?: string }) {
-  const thing = (e: GestureResponderEvent): void => {
-    console.log(e.currentTarget);
+function PrimaryButton({
+  children,
+  onPress,
+}: {
+  children?: string;
+  onPress?: () => void;
+}) {
+  const pressHandler = (): void => {
+    if (!onPress) {
+      return;
+    }
+    onPress();
   };
 
   return (
@@ -19,7 +28,7 @@ function PrimaryButton({ children }: { children?: string }) {
             ? [styles.buttonInnerContainer, styles.pressed]
             : styles.buttonInnerContainer
         }
-        onPress={thing}
+        onPress={pressHandler}
         android_ripple={{ color: '#640233' }}
       >
         <Text style={styles.buttonText}>{children}</Text>
